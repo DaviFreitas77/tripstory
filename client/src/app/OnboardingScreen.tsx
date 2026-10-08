@@ -18,6 +18,7 @@ import { DataItem } from '@/data/loginData';
 import { data } from '@/utils/loginUtil';
 import { AppleIcon, UserIcon } from '@/utils/buttonLoginUtil';
 import { router } from 'expo-router';
+import { AuthOptions } from '@/components/auth/authOptions';
 
 
 
@@ -44,12 +45,13 @@ export default function OnboardingScreen() {
 
   const renderItem = ({ item }: { item: DataItem }) => (
     <View
-      className="w-full max-w-md flex flex-col items-center justify-center"
+      className="w-full flex flex-col items-center justify-center"
       style={{ width: itemWidth }}
     >
       <Image
         source={item.image}
-        className="w-full  h-96"
+        className="w-full aspect-[4/3] max-h-96"
+        resizeMode="contain"
       />
       <Text className="text-center text-3xl font-bold text-primary">
         {item.title}
@@ -61,60 +63,37 @@ export default function OnboardingScreen() {
   );
 
   return (
-    <View className="flex-1 items-center justify-between px-6 bg-white py-16">
-      <FlatList
-        ref={listRef}
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        className="w-full"
-        contentContainerStyle={{ alignItems: 'center' }}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        onMomentumScrollEnd={(event) => {
-          const index = Math.round(
-            event.nativeEvent.contentOffset.x / itemWidth
-          );
-          currentIndexRef.current = index;
-
-        }}
-
-      />
-
-      <View className="max-w-2xl w-full flex flex-col items-center justify-center gap-4 ">
-        <ButtonLogin
-          icon={require('../../src/images/icons/google.png')}
-          text="Continue com Google"
-          onPress={() => console.log('Google login pressed')}
-          className={Platform.OS === 'android' ? 'bg-tertiary' : 'bg-quaternary'}
+    <View className="flex-1 flex items-center justify-center px-6 bg-white py-16 
+     md:py-36 ">
+      <View className='w-full flex flex-col justify-center items-center gap-16'>
+        <FlatList
+          ref={listRef}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          className="w-full"
+          contentContainerStyle={{ alignItems: 'center' }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          onMomentumScrollEnd={(event) => {
+            const index = Math.round(
+              event.nativeEvent.contentOffset.x / itemWidth
+            );
+            currentIndexRef.current = index;
+          }}
         />
-
-        <ButtonLogin
-          icon={AppleIcon}
-          text="Continue como Apple"
-          onPress={() => console.log('Google login pressed')}
-          className={Platform.OS === 'ios' ? 'bg-tertiary' : 'bg-quaternary'}
-        />
-
-        <ButtonLogin
-          icon={UserIcon}
-          text="Continue como Convidado"
-          className="bg-quaternary"
-          onPress={() => console.log('Google login pressed')}
-        />
-        <View className="flex flex-row items-center justify-center gap-2">
-          <Text className="text-center text-base max-w-xs font-semibold ">
-            Já possui uma conta?{' '}
-          </Text>
-          <Pressable onPress={() => router.push('/Auth/Login')}>
-            <Text className="text-primary font-bold">Entrar</Text>
-          </Pressable>
-        </View>
+        <AuthOptions guest={false} />
+         <View className="flex flex-row items-center justify-center gap-2">
+            <Text className="text-center text-base max-w-xs font-semibold ">
+              Já possui uma conta?{' '}
+            </Text>
+            <Pressable onPress={() => router.push('/Auth/Login')}>
+              <Text className="text-primary font-bold">Entrar</Text>
+            </Pressable>
+          </View>
+        <StatusBar style="auto" />
       </View>
-
-
-      <StatusBar style="auto" />
     </View>
   );
 }

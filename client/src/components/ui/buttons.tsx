@@ -29,7 +29,7 @@ export function ButtonLogin({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
-      className={`w-full flex-row items-center justify-center rounded-full   py-3 ${className}`}
+      className={`w-full max-w-2xl flex-row items-center justify-center rounded-full   py-3 ${className}`}
     >
       {icon && (
         isSvg ? (

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
+  KeyboardTypeOptions,
   Text,
   TextInput,
   View,
@@ -12,12 +13,16 @@ interface FloatingInputProps {
   onBlur: () => void;
   placeholder?: string;
   error?: string;
+  secureTextEntry?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 export function FloatingInput({
   value,
   onChangeText,
   onBlur,
+  secureTextEntry = false,
+  keyboardType = 'default',
   placeholder = 'Email',
   error,
 }: FloatingInputProps) {
@@ -50,8 +55,8 @@ export function FloatingInput({
   const labelColor = focused ? '#000' : '#6B7280';
 
   return (
-    <View className="mb-2">
-      <View className="relative">
+    <View className="mb-2 flex flex-col justify-center items-center w-full">
+      <View className="relative w-full max-w-2xl">
         <Animated.Text
           style={{
             position: 'absolute',
@@ -68,33 +73,35 @@ export function FloatingInput({
         </Animated.Text>
 
         <TextInput
-          className={`h-16 w-full rounded-full border px-5 ${
+          className={`h-16 w-full text-base rounded-full border px-5 mb-5 ${
             focused
               ? 'border-black'
               : 'border-gray-300'
           }`}
           style={{ paddingVertical: 0, textAlignVertical: 'center' }}
           value={value}
-          secureTextEntry={placeholder.toLowerCase().includes('senha')}
           onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
           onFocus={() => setFocused(true)}
           onBlur={() => {
             setFocused(false);
             onBlur();
           }}
-          keyboardType="email-address"
+          keyboardType={keyboardType}
           autoCapitalize="none"
           autoCorrect={false}
         />
       </View>
 
-      <Text
-        className="mt-1 px-4 text-sm text-red-500"
-        style={{ opacity: error ? 1 : 0 }}
-        accessibilityElementsHidden={!error}
-      >
-        {error || ' '}
-      </Text>
+      {/* <View className="w-full max-w-2xl mb-2">
+        <Text
+          className="mt-1 h-.5 text-start px-4 text-sm text-red-500"
+          style={{ opacity: error ? 1 : 0 }}
+          accessibilityElementsHidden={!error}
+        >
+          {error || ' '}
+        </Text>
+      </View> */}
     </View>
   );
 }

@@ -106,11 +106,11 @@ export function FloatingDateInput({
   }
 
   return (
-    <View className="mb-2">
+    <View className="mb-2 flex flex-col justify-center items-center w-full">
 
       {/* INPUT */}
 
-      <View className="relative">
+      <View className="relative max-w-2xl w-full">
         <Animated.Text
           style={{
             position: 'absolute',
@@ -157,57 +157,62 @@ export function FloatingDateInput({
 
       {/* PICKER */}
 
-      <Modal
-        visible={showPicker}
-        transparent
-        animationType="slide"
-        onRequestClose={cancel}
-      >
-        <View className="flex-1 justify-end">
-          {/* fundo */}
-          <Pressable
-            onPress={cancel}
-            className="absolute inset-0 bg-black/40"
-          />
+      {Platform.OS === 'android' && showPicker ? (
+        <DateTimePicker
+          value={tempDate}
+          mode="date"
+          onChange={handleChange}
+          themeVariant="light"
+        />
+      ) : null}
 
-          {/* bottom sheet */}
-          <View className="rounded-t-[32px] bg-white px-5 pb-8 pt-4">
+      {Platform.OS === 'ios' ? (
+        <Modal
+          visible={showPicker}
+          transparent
+          animationType="slide"
+          onRequestClose={cancel}
+        >
+          <View className="flex-1 justify-end">
+            <Pressable
+              onPress={cancel}
+              className="absolute inset-0 bg-black/40"
+            />
 
-            {/* indicador */}
-            <View className="mb-5 h-1 w-10 self-center rounded-full bg-gray-300" />
+            <View className="rounded-t-[32px] bg-white px-5 pb-8 pt-4">
+              <View className="mb-5 h-1 w-10 self-center rounded-full bg-gray-300" />
 
-            {/* header */}
-            <View className="mb-2 flex-row items-center justify-between">
-              <Pressable onPress={cancel}>
-                <Text className="text-base font-medium text-gray-500">
-                  Cancelar
+              <View className="mb-2 flex-row items-center justify-between">
+                <Pressable onPress={cancel}>
+                  <Text className="text-base font-medium text-gray-500">
+                    Cancelar
+                  </Text>
+                </Pressable>
+
+                <Text className="text-base font-bold text-black">
+                  {placeholder}
                 </Text>
-              </Pressable>
 
-              <Text className="text-base font-bold text-black">
-                {placeholder}
-              </Text>
+                <Pressable onPress={confirm}>
+                  <Text className="text-base font-bold text-primary">
+                    OK
+                  </Text>
+                </Pressable>
+              </View>
 
-              <Pressable onPress={confirm}>
-                <Text className="text-base font-bold text-primary">
-                  OK
-                </Text>
-              </Pressable>
-            </View>
-
-            {/* picker */}
-            <View className="items-center">
-              <DateTimePicker
-                value={tempDate}
-                mode="date"
-                display="spinner"
-                onChange={handleChange}
-                themeVariant="light"
-              />
+              <View className="items-center">
+                <DateTimePicker
+                  value={tempDate}
+                  mode="date"
+                  display="spinner"
+                  onChange={handleChange}
+                  themeVariant="light"
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      ) : null}
     </View>
   );
 }

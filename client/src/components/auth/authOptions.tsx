@@ -9,7 +9,7 @@ interface AuthOptionsProps {
 export function AuthOptions({ guest }: AuthOptionsProps) {
     return (
 
-        <View className="max-w-2xl w-full flex flex-col items-center justify-center gap-4 ">
+        <View className=" max-w-2xl w-full flex flex-col items-center justify-center gap-4 ">
             <ButtonLogin
                 icon={require('../../../src/images/icons/google.png')}
                 text="Continue com Google"

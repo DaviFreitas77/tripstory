@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema, LoginFormData } from '@/schemas/authSchema';
 import {
+    Button,
     Keyboard,
     Pressable,
     Text,
@@ -32,57 +33,50 @@ export function FormLogin() {
     return (
         <View
             className="relative w-full items-center justify-between" >
-            <View className="w-full ">
+            <View className="w-full max-w-2xl flex flex-col items-center justify-center">
                 <Text className="mb-2 text-3xl font-bold text-primary text-center">
                     Bem vindo de volta!
                 </Text>
                 <Text className="mb-14 text-base text-secondary text-center">
                     Suas histórias de viagem estão esperando por você
                 </Text>
+
                 <Controller
                     control={control}
                     name="email"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
+                        <View className="w-full">
                             <FloatingInput
                                 value={value}
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 placeholder="Email"
+                                keyboardType="email-address"
                                 error={errors.email?.message}
                             />
                         </View>
                     )}
                 />
+
                 <Controller
                     control={control}
                     name="password"
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
-
-                            <View >
-                                <FloatingInput
-                                    value={value}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                    placeholder="Senha"
-                                    error={errors.password?.message}
-                                />
-                            </View>
+                    render={({ field: { onChange, onBlur, value, } }) => (
+                        <View className="w-full">
+                            <FloatingInput
+                                value={value}
+                                onChangeText={onChange}
+                                secureTextEntry={true}
+                                onBlur={onBlur}
+                                placeholder="Senha"
+                                keyboardType="default"
+                                error={errors.password?.message}
+                            />
                         </View>
                     )}
                 />
-                <Pressable className="mt-[-10px] mb-6 self-end">
-                    <Text className="font-semibold text-primary">
-                        Esqueci minha senha
-                    </Text>
-                </Pressable>
-                <ButtonLogin
-                    text="Entrar"
-                    onPress={handleSubmit(onSubmit)}
-                    className="bg-primary h-16"
-                    classNameText="text-lg text-white"
-                />
+                <ButtonLogin onPress={handleSubmit(onSubmit)} text="Entrar" className="w-full bg-primary h-16" classNameText='font-bold text-white text-lg' />
+
 
             </View>
 

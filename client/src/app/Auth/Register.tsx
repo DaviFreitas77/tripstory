@@ -26,13 +26,13 @@ export default function RegisterScreen() {
     >
       <View className="flex-1 items-center justify-center bg-white -mt-10 px-6  gap-6">
         <FormRegister />
-        {/* <View className="flex flex-row items-center justify-center gap-2">
+        <View className="flex flex-row items-center justify-center gap-2">
           <View className="h-[1px] w-16 bg-gray-300" />
           <Text className="text-sm font-semibold text-gray-500">Ou</Text>
           <View className="h-[1px] w-16 bg-gray-300" />
-        </View> */}
+        </View>
 
-        {/* <AuthOptions guest={true} /> */}
+        <AuthOptions guest={true} />
         <View className="flex flex-row items-center justify-center gap-2">
           <Text className="text-center text-base max-w-xs font-semibold ">
             Já possui uma conta?{' '}

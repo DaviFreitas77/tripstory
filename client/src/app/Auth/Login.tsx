@@ -29,15 +29,15 @@ export default function LoginScreen() {
           <View className="h-[1px] w-16 bg-gray-300" />
         </View>
 
-        <AuthOptions  guest={false} />
-        <View className="flex flex-row items-center justify-center gap-2">
-          <Text className="text-center text-base max-w-xs font-semibold ">
-            Não possui uma conta?{' '}
-          </Text>
+        <AuthOptions guest={false}/>
+        <View className="flex flex-row items-center justify-center ">
+          <Text className="text-base font-semibold">Não tem uma conta? {""}</Text>
           <Pressable onPress={() => router.push('/Auth/Register')}>
-            <Text className="text-primary font-bold">Registrar-se</Text>
+            <Text className="text-primary font-semibold">Cadastre-se</Text>
           </Pressable>
         </View>
+
+
         <StatusBar style="auto" />
       </View>
 

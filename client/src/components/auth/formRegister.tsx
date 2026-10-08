@@ -34,8 +34,8 @@ export function FormRegister() {
     return (
         <View
             className=" w-full  items-center justify-between ">
-            <View className="w-full ">
-                <Text className="mb-2 text-3xl font-bold text-primary text-center">
+            <View className="w-full max-w-2xl flex flex-col items-center justify-center">
+                <Text className="mb-1 text-3xl font-bold text-primary ">
                     Comece sua jornada !
                 </Text>
                 <Text className="mb-14 text-base text-secondary text-center">
@@ -46,7 +46,7 @@ export function FormRegister() {
                     control={control}
                     name="name"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
+                        <View className="w-full">
                             <FloatingInput
                                 value={value}
                                 onChangeText={onChange}
@@ -62,12 +62,13 @@ export function FormRegister() {
                     control={control}
                     name="email"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
+                        <View className="w-full">
                             <FloatingInput
                                 value={value}
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 placeholder="Email"
+                                keyboardType="email-address"
 
                             />
                         </View>
@@ -77,7 +78,7 @@ export function FormRegister() {
                     control={control}
                     name="dateOfBirth"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
+                        <View className="w-full">
                             <FloatingDateInput
                                 value={value.toString()}
                                 onChange={onChange}
@@ -90,14 +91,16 @@ export function FormRegister() {
                     control={control}
                     name="password"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <View >
+                        <View className="w-full">
 
                             <View >
                                 <FloatingInput
                                     value={value}
                                     onChangeText={onChange}
                                     onBlur={onBlur}
+                                    secureTextEntry={true}
                                     placeholder="Senha"
+                                    keyboardType="default"
 
 
                                 />
