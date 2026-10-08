@@ -95,7 +95,7 @@ export function FloatingInput({
 
       {/* <View className="w-full max-w-2xl mb-2">
         <Text
-          className="mt-1 h-.5 text-start px-4 text-sm text-red-500"
+          className="mt-1 text-start px-4 text-sm text-red-500"
           style={{ opacity: error ? 1 : 0 }}
           accessibilityElementsHidden={!error}
         >

@@ -26,6 +26,7 @@ export function FormLogin() {
             password: '',
         },
     });
+    
     const onSubmit = (data: LoginFormData) => {
         console.log(data);
     };

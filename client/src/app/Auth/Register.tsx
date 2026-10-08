@@ -18,6 +18,7 @@ import { FormRegister } from '@/components/auth/formRegister';
 
 export default function RegisterScreen() {
 
+
   return (
     <TouchableWithoutFeedback
       onPress={Keyboard.dismiss}

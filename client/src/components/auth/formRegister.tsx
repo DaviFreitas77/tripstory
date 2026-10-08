@@ -12,8 +12,11 @@ import { ButtonLogin } from '../ui/buttons';
 import { FloatingInput } from '../ui/floatingInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FloatingDateInput } from '../ui/dateInput';
+import { supabase } from '@/lib/supabase';
+
 
 export function FormRegister() {
+
     const {
         control,
         handleSubmit,
@@ -28,9 +31,44 @@ export function FormRegister() {
         },
     });
 
-    const onSubmit = (data: RegisterFormData) => {
-        console.log(data);
+    const onSubmit = async (data: RegisterFormData) => {
+        alert("aqui");
+        const { data: authData, error: authError } =
+            await supabase.auth.signUp({
+                email: data.email,
+                password: data.password,
+            });
+
+        if (authError) {
+            console.log(authError.message);
+            return;
+        }
+
+        if (!authData.user) {
+            console.log('Usuário não foi criado.');
+            return;
+        }
+
+        const { error: profileError } = await supabase
+            .from('users_table')
+            .insert({
+                id: authData.user.id,
+                name: data.name,
+                email: data.email,
+                date_of_birth: data.dateOfBirth
+                    .toISOString()
+                    .split('T')[0],
+            });
+
+        if (profileError) {
+            console.log(profileError.message);
+            return;
+        }
+
+        console.log('Cadastro realizado com sucesso!');
     };
+
+
     return (
         <View
             className=" w-full  items-center justify-between ">
@@ -52,7 +90,7 @@ export function FormRegister() {
                                 onChangeText={onChange}
                                 onBlur={onBlur}
                                 placeholder="Nome"
-
+                                error={errors.name?.message}
                             />
                         </View>
                     )}
@@ -69,7 +107,7 @@ export function FormRegister() {
                                 onBlur={onBlur}
                                 placeholder="Email"
                                 keyboardType="email-address"
-
+                                error={errors.email?.message}
                             />
                         </View>
                     )}
@@ -83,6 +121,7 @@ export function FormRegister() {
                                 value={value.toString()}
                                 onChange={onChange}
                                 onBlur={onBlur}
+                                error={errors.dateOfBirth?.message}
                             />
                         </View>
                     )}
@@ -101,6 +140,7 @@ export function FormRegister() {
                                     secureTextEntry={true}
                                     placeholder="Senha"
                                     keyboardType="default"
+                                    error={errors.password?.message}
 
 
                                 />
@@ -110,7 +150,7 @@ export function FormRegister() {
                 />
 
                 <ButtonLogin
-                    text="Entrar"
+                    text="Cadastrar"
                     onPress={handleSubmit(onSubmit)}
                     className="bg-primary h-16"
                     classNameText="text-lg text-white"
